@@ -4,7 +4,7 @@ import time
 
 def do_work(item):
     print("doing work",item)
-    time.sleep(3)
+    time.sleep(1)
 
 def worker():
     while True:
