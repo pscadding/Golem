@@ -1,5 +1,6 @@
 # saved as greeting-client.py
 import sys
+import threading
 import speech_recognition as sr
 import Pyro4
 import Pyro4.util
@@ -7,13 +8,11 @@ sys.excepthook = Pyro4.util.excepthook
 
 gc = Pyro4.Proxy("PYRONAME:golem.controller@192.168.0.66:9090") # get a Pyro proxy to the Golem object
 
-
-
 recognizer = sr.Recognizer()
 
 commandDict = {
-    "move forward": gc.move_fowards,
-    "move forwards": gc.move_fowards,
+    "move forward": gc.move_forwards,
+    "move forwards": gc.move_forwards,
     "move backward": gc.move_backwards,
     "move backwards": gc.move_backwards,
 }
@@ -32,8 +31,10 @@ def listen():
     with sr.Microphone() as source:
         recognizer.adjust_for_ambient_noise(source)
         audio = recognizer.listen(source)
+        t = threading.Thread(target=recognise, args=[audio])
+        t.start()
 
-
+def recognise(audio):
     print("now recognise")
     try:
         # for testing purposes, we're just using the default API key
@@ -41,14 +42,14 @@ def listen():
         # instead of `r.recognize_google(audio)`
         text = recognizer.recognize_google(audio)
         print("Google Speech Recognition thinks you said ",text)
-        return text
+        if text:
+            run_command(text)
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
+
 while True:
-    text = listen()
-    if text:
-        run_command(text)
+    listen()
 

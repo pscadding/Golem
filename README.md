@@ -25,7 +25,7 @@ PI Python Modules:
 The following alias's should be added to Golems `.barshrc` file
 
 ```
-alias pyro_server='python3 ~/golem/pyro_server.py'
+alias pyro_server='python3 ~/golem/server/pyro_server.py'
 alias pyro_name_server='pyro4-ns -n 192.168.0.66'
 alias golem_start='pyro_name_server &
 pyro_server'

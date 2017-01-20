@@ -2,24 +2,7 @@
 import Pyro4
 import RPi.GPIO as GPIO
 import time
-import queue
-import threading
-
-
-def worker():
-    while True:
-        items = motor_queue.get()
-        if items is None:
-            break
-        items[0](items[1:])
-        motor_queue.task_done()
-
-motor_queue = queue.PriorityQueue()
-threads = []
-for i in range(1):
-    t = threading.Thread(target=worker)
-    t.start()
-    threads.append(t)
+import g_threading as thread
 
 @Pyro4.expose
 class GolemController(object):
@@ -48,20 +31,21 @@ class GolemController(object):
         GPIO.output(7, 0)
         GPIO.output(8, 0)
 
-    def _move_backwards(self, period=0.5):
-        # Turn the right motor forwards
+    def _move_backwards(self, period):
+        # Turn the right motor backwards
         GPIO.output(9, 1)
         GPIO.output(10, 0)
 
-        # Turn the left motor forwards
+        # Turn the left motor backwards
         GPIO.output(7, 0)
         GPIO.output(8, 1)
 
         time.sleep(period)
 
-        self.stop()
+        thread.motor_queue.put([self._stop])
 
-    def _move_fowards(self, period=0.5):
+
+    def _move_forwards(self, period):
         # Turn the right motor forwards
         GPIO.output(9, 0)
         GPIO.output(10, 1)
@@ -72,12 +56,16 @@ class GolemController(object):
 
         time.sleep(period)
 
-        self.stop()
+        thread.motor_queue.put([self._stop])
+
+    def move_backwards(self,period=0.5):
+        thread.motor_queue.put([self._move_backwards,period])
 
     def move_forwards(self,period=0.5):
-        motor_queue.put([self._move_fowards])
-        motor_queue.join()
+        thread.motor_queue.put([self._move_forwards,period])
 
+    def stop(self):
+        thread.motor_queue.put([self._stop])
 
 Pyro4.Daemon.serveSimple({GolemController(): "golem.controller"},
                          host = '192.168.0.66',
