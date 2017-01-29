@@ -57,12 +57,12 @@ class GolemController(object):
     def _move_direction(self, instruction):
         if instruction == Instruction.backwards:
             # Turn the right motor backwards
-            GPIO.output(9, 0)
-            GPIO.output(10, 1)
+            GPIO.output(9, 1)
+            GPIO.output(10, 0)
 
             # Turn the left motor backwards
-            GPIO.output(7, 1)
-            GPIO.output(8, 0)
+            GPIO.output(7, 0)
+            GPIO.output(8, 1)
 
         elif instruction == Instruction.forwards:
             # Turn the right motor forwards
@@ -78,8 +78,14 @@ class GolemController(object):
             GPIO.output(9, 0)
             GPIO.output(10, 1)
 
+            GPIO.output(7, 0)
+            GPIO.output(8, 1)
+
         elif instruction == Instruction.right:
             # Turn the left motor forwards
+            GPIO.output(9, 1)
+            GPIO.output(10, 0)
+
             GPIO.output(7, 1)
             GPIO.output(8, 0)
 
