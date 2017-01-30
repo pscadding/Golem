@@ -30,3 +30,6 @@ GPIO.output(8,0)
 time.sleep(0.5)
 
 GPIO.cleanup()
+
+
+

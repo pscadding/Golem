@@ -114,6 +114,14 @@ def recognise(recognizer,audio):
 
 # gc.move_forwards(2,"normal")
 # gc.move_left(1,"slow")
-gc.move_right(1,"normal")
-gc.move_forwards(1,"normal")
+# gc.move_right(1,"normal")
+# gc.move_left(1,"fast")
+# gc.move_forwards(1,"normal")
 # gc.move_forwards(1,"fast")
+
+# gc.move_forwards(2,"slow")
+# gc.move_forwards(2,"normal")
+# gc.move_forwards(2,"fast")
+
+gc.move_forwards(1,"fast")
+gc.move_backwards(5,"slow")
