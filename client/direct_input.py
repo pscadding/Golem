@@ -38,21 +38,8 @@ class DirectInput(object):
             # get the maximum absolute value
             maximum = max(abs(left),abs(right))
             if maximum > 1:
-                print("normalizing")
                 left = left / maximum
                 right = right / maximum
-
-
-            print("left",left)
-            print("right",right)
-
-            # drive_turn_offset = 0.2
-
-            # if drive < 0:
-            #     drive = -drive
-            #     move_args = [int(drive * 100), 0, int(drive * 100), 0]
-            # else:
-            #     move_args = [0,int(drive * 100), 0, int(drive * 100)]
 
             move_args = [0, 0, 0, 0]
 
@@ -66,8 +53,6 @@ class DirectInput(object):
             else:
                 move_args[1] = randt(right)
 
-
-            # print(move_args)
             self.gc.move(*move_args)
 
     def dead_zone(self,value):
