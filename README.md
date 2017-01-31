@@ -37,5 +37,6 @@ alias golem_restart='pyro_server'
 
 1. Once you have the samba server setup you can run the `transfer_script.cmd` to copy the files over to 
 Golem.
-2. Connect to Golem using ssh and use the golem_start command. *Golem will now be listening for commands*
+2. Connect to Golem using ssh and use the `golem_start` command. *Golem will now be listening for commands*
 3. Run the `pyro_client.py` script and it will run what ever instructions contained within it.
+4. If you wish to make a change to Golem server side code, then you will need to run set one again, and then use `golem_restart` instead.
