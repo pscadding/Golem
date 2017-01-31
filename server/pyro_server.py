@@ -144,6 +144,9 @@ class GolemController(object):
         time.sleep(period)
         self._move(self.stop_matrix)
 
+    def move(self,rf,rb,lf,lb):
+        self._move(WheelsMatrix(rf,rb,lf,lb))
+
     def move_backwards(self,period=0.5,speed="fast"):
         m = self.common_matrices['backwards_' + speed]
         thread.motor_queue.put([self._move_period, m, period])
@@ -163,6 +166,7 @@ class GolemController(object):
     def stop(self):
         thread.motor_queue.put([self._stop])
 
-Pyro4.Daemon.serveSimple({GolemController(): "golem.controller"},
+Pyro4.Daemon.serveSimple({GolemController(): "golem.controller",
+                          WheelsMatrix:"golem.wheelsmatrix"},
                          host = '192.168.0.66',
                          ns=True)
