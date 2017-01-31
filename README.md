@@ -16,6 +16,7 @@ PC Python Modules:
 * Pyro4
 * SpeechRecognition
 * PyAudio
+* Pygame
 
 PI Python Modules:
 * Pyro4
