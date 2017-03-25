@@ -1,4 +1,5 @@
 import pygame
+from common.wheel_matrix import WheelsMatrix, WheelMatrix
 
 class DirectInput(object):
 
@@ -24,6 +25,9 @@ class DirectInput(object):
         self.trigger_axis = 2
 
     def run(self):
+        if self.joystick is None:
+            raise ValueError("No Xbox controller found, make sure its connected before running this")
+
         randt = lambda x: abs(int(x * 100))
         while True:
             pygame.event.get()

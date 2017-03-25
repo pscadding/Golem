@@ -1,9 +1,10 @@
 # saved as greeting-client.py
 import sys
-import time
+import os
 import Pyro4
 import Pyro4.util
 sys.excepthook = Pyro4.util.excepthook
+sys.path.append( os.path.dirname(os.path.dirname(__file__)))
 
 
 basic_address = "PYRONAME:{0}@192.168.0.66:9090"
